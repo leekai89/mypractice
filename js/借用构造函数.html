@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>借用构造函数</title>
+</head>
+<body>
+  <script type="text/javascript">
+      function Article() {
+          this.tags = ["js", "css"];
+      }
+      function StaticPage() {
+        Article.call(this);
+      }
+      var article1 = new Article();
+      var page = new StaticPage();
+      page.tags.push("html");
+
+      console.log(article1.tags);
+      console.log(page.tags.join(", "));
+  </script>
+</body>
+</html>
