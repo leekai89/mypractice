@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JS继承</title>
+</head>
+<body>
+   <script type="text/javascript">
+      // 1. 通常的继承方式
+      function Parent(name, age) {
+          this.name = name;
+          this.age = age;
+      }
+      function Child(name, age, salary) {
+          Parent.apply(this, [name, age]);
+          this.salary = salary;
+      }
+      Child.prototype = new Parent();// 将子类的原型设置为父类的实例
+      Child.prototype.constructor = Child;
+      
+      //2. 将父类和子类的构造函数全部无参数化, 初始化操作全部放在原型的init方法里面
+      //需手动调用init方法进行初始化
+      function Parent(){}
+      Parent.prototype = {
+          constructor: Parent,
+          init: function(name, age){
+              this.name = name;
+              this.age = age;
+          }
+      };
+      function Child(){}
+      Child.prototype = new Parent();
+      Child.prototype.constructor = Child;
+      Child.prototype.init = function(name, age, salary){
+          Parent.prototype.init.apply(this, [name, age]);
+          this.salary = salary;
+      };
+      /*var p1 = new Parent();
+      p1.init("lee", 80);
+
+      var c1 = new Child();
+      c1.init("kai", 90, 1000);
+
+      console.dir(p1);
+      console.dir(c1);*/
+
+      // 3. 将init操作放在构造函数里面
+      var initializing = false; //表示是否正在进行子类的创建和继承
+      function Parent(){
+          if (!initializing) {
+             this.init.apply(this, arguments);
+          }
+      }
+      Parent.prototype = {
+         constructor: Parent,
+         init: function(name, age){
+            this.name = name;
+            this.age = age;
+         }
+      };
+      function Child(){
+          //自定调用init方法
+          if (!initializing) {
+              this.init.apply(this, arguments);
+          }
+      };
+      initializing = true; 
+      Child.prototype = new Parent();
+      Child.prototype.constructor = Child;
+      initializing = false;
+      Child.prototype.init = function(name, age, salary){
+          Parent.prototype.init.apply(this, [name, age]);
+          this.salary = salary;
+      };
+      Child.prototype.getSalary = function(){
+          console.dir(this.salary);
+      };
+
+      var c1 = new Child("leekai", 90, 1000);
+      console.dir(c1);
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+   </script>
+</body>
+</html>
