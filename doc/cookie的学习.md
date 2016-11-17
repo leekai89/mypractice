@@ -1,6 +1,7 @@
 **[cookie的学习](http://blog.yemou.net/article/query/info/tytfjhfascvhzxcytp62)**
 
 **设置cookie** 
+
 每个cookie都是一个名/值对，可以把下面这样一个字符串赋值给document.cookie:
 `document.cookie="userId=828";` 
 如果要一次存储多个名/值对，可以使用分号加空格（; ）隔开，例如:
@@ -20,6 +21,8 @@ document.addCookie("userName=hulk");
 事实上，浏览器就是按照这样的方式来设置cookie的，如果要改变一个cookie的值，只需重新赋值，例如:
 document.cookie="userId=929"; 
 这样就将名为userId的cookie值设置为了929。
+
+
 
 
 
