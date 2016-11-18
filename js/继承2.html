@@ -7,8 +7,56 @@
 <body>
     <script type="text/javascript" src="../utils/util.js"></script>
     <script type="text/javascript">
-       console.log(getParameter("name")); 
-       document.write(document.cookie);
+       var copy = function(source){
+          var target = {}, attr;
+          for (attr in source) {
+              if (source.hasOwnProperty(attr)) {
+                  target[attr] = source[attr];
+              }
+          }
+          return target;
+       };
+       function Parent(){
+          this.init.apply(this, arguments);
+       }
+       Parent.prototype = {
+          constructor: Parent,
+          say: function(){
+              console.log("Parent' construct!");
+          },
+          init: function(name, salary){
+              this.name = name;
+              this.salary = salary;
+          },
+          xxx: "xxx"
+       };
+       function Child(){
+          this.init.apply(this, arguments);
+       }
+       //继承开始
+       Child.prototype = copy(Parent.prototype);
+       Child.prototype.constructor = Child;
+
+       Child.prototype.init = function(name, salary, percent){
+            Parent.prototype.init.apply(this, [name, salary]);
+            this.percent = percent;
+       };
+       Child.prototype.getSalary = function(){
+            return this.salary + this.percent * this.salary;
+       };
+
+       var p1 =  new  Parent("yan", 100);
+       var ch1 = new Child("lee", 110);
+       //说明: Parent的prototype和Child的prototype引用的其实是不同的对象
+       //只是对象里面的属性引用的是同一块引用地址
+       //console.log(p1.init === ch1.init);  => true
+       //console.log(p1.say === ch1.say);    => true
+       
+       console.dir(p1);
+       console.dir(ch1.xxx);
+
+
+
     </script>
 </body>
 </html>

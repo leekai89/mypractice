@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>继承3</title>
+</head>
+<body>
+    <script type="text/javascript">
+        //source 需要被复制的对象
+        function copy(source){
+            var target = {}, attr;
+            for (attr in source) {
+                if (source.hasOwnProperty(attr)) {
+                    target[attr] = source[attr];
+                }
+            }
+            return target;
+        }
+        //初始化工作全部放到原型init方法当中
+        function Parent(){  
+            this.init.apply(this, arguments);
+        }
+        Parent.prototype = {
+            constructor: Parent,
+            init: function(name, age){
+                this.name = name;
+                this.age = age;
+            },
+            getAge: function(){
+                return this.age;
+            }
+        };
+        function Child(){
+            this.baseProto = Parent.prototype;
+            this.init.apply(this, arguments);
+        }
+        Child.prototype = copy(Parent.prototype);
+        Child.prototype.constructor = Child;
+        Child.prototype.init = (function(name, func){
+            return function(){
+                var old = this.base;
+                this.base = this.baseProto[name];
+                var ret = func.apply(this, arguments);
+                this.base = old;
+                return ret;
+            };
+        })();
+
+    </script>
+</body>
+</html>

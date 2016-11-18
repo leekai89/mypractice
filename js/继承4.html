@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>继承4</title>
+</head>
+<body>
+    <script type="text/javascript">
+      //类的构建
+      var Class = function(){
+          var hasOwn = Object.prototype.hasOwnProperty;
+          //校验函数
+          function isObject(obj){
+              return typeof obj === "object";
+          }
+          function isFunction(f){
+              return typeof f === "function";
+          }
+          //构建类
+          function ClassBuilder(options){
+              if (!isObject(options)) {
+                  throw new Error("must valid object");
+              }
+              var instanceMembers = isObject(options) && options.instanceMembers || {},
+                  staticMembers = isObject(options) && options.staticMembers || {},
+                  extend = isObject(options) && isFunction(options.extend) && options.extend,
+                  prop;
+              function TargetClass(){
+                  if (isFunction(this.init)) {
+                     this.init.apply(this, arguments);
+                  }
+              }
+              for (prop in staticMembers) {
+                  if (hasOwn.call(staticMembers, prop)) {
+                      TargetClass[prop] = staticMembers[prop];
+                  }
+              }
+              TargetClass.prototype = instanceMembers;
+              TargetClass.prototype.constructor = TargetClass;
+              return TargetClass;
+          }
+          return ClassBuilder;
+      }();
+      var Man = Class({
+          instanceMembers: {
+              init: function (name, salary) {
+                  this.name = name;
+                  this.salary = salary;
+              },
+              getName: function () {
+                  return this.name;
+              },
+              getSalary: function () {
+                  return this.salary;
+              },
+              toString: function () {
+                  return this.name + '\'s salary is ' + this.getSalary() + '.';
+              }
+          },
+          staticMembers: {
+              idCounter: 1,
+              getId: function () {
+                  return this.idCounter++;
+              }
+          }
+      });
+      var e = new Man('jason', 5000);
+      console.log(e.constructor);
+      
+    </script>
+</body>
+</html>
