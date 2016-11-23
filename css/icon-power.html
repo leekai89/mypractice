@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>icon-power</title>
+  <style type="text/css">
+      .icon-power {
+          position: relative;
+          display: inline-block;
+          width: 30px;
+          height: 30px;
+          color: #222;
+          background-color: #f00;
+      }
+      .icon-power:before {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: 20px;
+          height: 20px;
+          border: 2px solid #0f0;
+          margin-top: -12px;
+          margin-left: -12px;
+          background: transparent;
+          -webkit-border-radius: 16px;
+          -moz-border-radius: 16px;
+          border-radius: 16px;
+      }
+      .icon-power:after {
+          content: "";
+          position: absolute;
+          top: 0;
+          left: 50%;
+          width: 2px;
+          height: 7px;
+          border: 2px solid #fff;
+          margin-left: -3px;
+          background: #0f0;
+      }
+  </style>
+</head>
+<body>
+    <a href="#non" class="icon-power"></a>
+</body>
+</html>
