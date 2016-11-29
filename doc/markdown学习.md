@@ -1,11 +1,6 @@
-# markdown学习
 ## markdown学习
-### markdown学习
-#### markdown学习
-##### markdown学习
-###### markdown学习
-
-- 记录自己平时常用到的markdown语法
+&#160;记录自己平时常用到的markdown语法,其他不常用的语法详情可以参见如下文章：
+- [献给写作者的 Markdown 新手指南](http://www.jianshu.com/p/q81RER)
 
 - 无序列表使用  '-' 短杠后面带上字符即可, 记得在短杠和第一个字符之间要留有一个空白符
 - 不想使用'#'标题, 主要是我觉得markdown的标题显示的字体字号显示的太难看,个头太难看
