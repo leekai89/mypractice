@@ -31,3 +31,6 @@
 ### git bash 出现vim的时候怎么退出
 > 如果是输出状态，首先Esc退出输入状态，然后Shift+;，再输入q!或wq!（不保存改动，wq!是保存文件的写入修改）退出 
 
+### 如何预览github仓库里面的html页面
+- 使用 http://htmlpreview.github.com/网站，然后将要预览的html页面链接地址复制进去即可
+

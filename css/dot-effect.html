@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			body {
+				background-color: #ccc;
+			}
+			.dot-group {
+				position: absolute;
+			}
+			.dot-item {
+				display: inline-block;
+				width: 20px;
+				height: 20px;
+				position: relative;
+				font-size: 0;
+			}
+			.dot-item::before{
+				position: absolute;
+    			left: 50%;
+    			top: 50%;
+    			-webkit-transform: translate(-50%,-50%);
+    			transform: translate(-50%,-50%);
+    			width: 8px;
+    			height: 8px;
+    			background-color: #fff;
+    			border-radius: 50%;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="dot-group">
+			<a class="dot-item"></a>
+			<a class="dot-item"></a>
+			<a class="dot-item"></a>
+		</div>
+	</body>
+</html>

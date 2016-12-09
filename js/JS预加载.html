@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>JS预加载</title>
+	</head>
+	<body>
+		<div id="box1"></div>
+		<div id="box1"></div>
+		<div id="box1"></div>
+		<script type="text/javascript">
+			function preloader(){
+				//code...
+			}
+			function addLoadEvent(func){
+				var oldonload = window.onload;
+				if (typeof window.onload !== "function") {
+					window.onload = func;
+				}else {
+					console.log("here");
+					window.onload = function(){
+						if (oldonload) {
+							oldonload();
+						}
+						func();
+					};
+				}
+			}
+			addLoadEvent(function(){
+				console.log("函数1");
+			});
+			addLoadEvent(function(){
+				console.log("函数2");
+			});
+		</script>
+	</body>
+</html>
