@@ -34,3 +34,12 @@
 ### 如何预览github仓库里面的html页面
 - 使用 http://htmlpreview.github.com/网站，然后将要预览的html页面链接地址复制进去即可
 
+### 日常操作git常见步骤:
+```
+  git pull
+  git add -A
+  git commit -m 'well'
+  git push origin 
+  
+```
+
