@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>页面效果</title>
+  <style type="text/css">
+     * {margin: 0;padding: 0;}
+     body {
+        background-color: #f5f5f5;
+     }
+     li {list-style: none;}
+     a {text-decoration: none;}
+     .tutorial {
+        padding-bottom: 20px;text-align: center;overflow: hidden;
+      }
+      h2 {
+        text-align: center;font-weight: 200;line-height: 38px;margin: 40px auto 0;
+        font-size: 21px;max-width: 740px;
+      }
+     .tabs {
+        display: inline-block;margin: 45px auto 0;font-size: 0;
+      }
+      .tabs li {
+        display: inline-block;font-size: 15px;margin: 0;
+      }
+      .tabs a {
+         color: #323232;background-color: #fff;padding: 10px 20px;display: inline-block;
+         border: 1px solid #ddd;position: relative;line-height: 1em;transition: all .2s ease-in-out 0s;
+      }
+      .tabs a:hover {
+         color: #327fc7;border-color: #327fc7;z-index: 10;
+      }
+      .tabs li:first-child a {
+          border-top-left-radius: 5px;border-bottom-left-radius: 5px;
+      }
+      .tabs li:last-child a {
+          border-top-right-radius: 5px;border-bottom-right-radius: 5px;
+          margin: 0 -1px
+      }
+      .tabs a.selected {
+           z-index: 20;color: #fff;background-color: #327fc7;border-color: #327fc7;
+      }
+      .wrapper {
+          position: relative;width: 980px;margin: 0 auto;
+      }
+      .tutorial-list {
+          margin-top: 90px;counter-reset: tutorialstep;display: none;
+      }
+      .tutorial-list.active {
+         display: block;
+      }
+      .tutorial-list > li {
+          position: relative;background-color: #fff;margin: 0 0 70px 0px;padding: 40px 0 60px;
+          font-size: 18px;border: 1px solid #ddd;border-radius: 5px;text-align: center;
+          z-index: 1;box-sizing: border-box;transition: all 0.6s ease-in-out 0s;
+      }
+      .image-right {height: 328px;line-height: 328px;}
+      .question {height: 199px;line-height: 199px;}
+      .option-terminal {height: 317px;line-height: 317px;}
+      .option-terminal2 {height: 345px;line-height: 345px;}
+      .option-terminal3 {height: 373px;line-height: 373px;}
+      .option-all {height: 339px;line-height: 339px;}
+      .animate-in {
+         opacity: 0;transform: translateY(40px);
+      }
+
+  </style>
+</head>
+<body>
+   <div class="tutorial" id="tutorial">
+      <h2>You get one site per GitHub account and organization, <br />and unlimited project sites. Ready? Let’s get started.</h2>
+      <ul class="tabs">
+          <li><a href="#user-site" class="selected">User or organization site</a></li>
+          <li><a href="#project-site">Project site</a></li>
+      </ul>
+      <ul id="user-site" class="tutorial-list wrapper active">
+         <li class="image-right">image-right</li>
+         <li class="question">question</li>
+         <li class="option-terminal">option-terminal</li>
+         <li class="option-terminal option-terminal-2">option-terminal-2</li>
+         <li class="option-terminal option-terminal-3">option-terminal-3</li>
+         <li class="option-all">option-all</li>
+      </ul>
+      <ul id="project-site" class="tutorial-list wrapper">
+         <li class="image-right">image-right</li>
+         <li class="question">question</li>
+         <li class="option-terminal">option-terminal</li>
+         <li class="option-terminal option-terminal-2">option-terminal-2</li>
+         <li class="option-terminal option-terminal-3">option-terminal-3</li>
+         <li class="option-all">option-all</li>
+      </ul>
+   </div>
+   <script type="text/javascript" src="jquery.js"></script>
+   <script type="text/javascript">
+      $(function(){
+          var bind = function(fn, context) {
+              return function() {
+                 fn.apply(context, arguments);
+              }
+          };
+          var Tutorial = function() {
+              $("#tutorial > .tabs a").click(bind(this.tutorialTabClick, this));
+
+              $(".tutorial-list > li").addClass("animate-in");
+
+              //监听滚动事件
+              $(window).scroll(bind(this.animateInPresentElements, this));
+          };
+          Tutorial.prototype = {
+              constructor: Tutorial,
+              tutorialTabClick: function(evt) {
+                  var href;
+                  evt.preventDefault();
+                  
+                  //高亮显示当前tab菜单
+                  this.selectTab(evt.currentTarget);
+
+                  //显示对应高亮菜单内容区域
+                  $(".tutorial-list.active").removeClass("active");
+                  href = $(evt.currentTarget).attr("href");
+                  $(href).addClass("active");
+
+                  //重置当前显示内容区域的样式
+                  this.resetAllTutorialSteps();
+
+                  //以运动的现实显示对应的内容
+                  this.animateInPresentElements();
+
+
+              },
+              selectTab: function(tab) {
+                 $(tab).closest(".tabs").find(".selected").removeClass("selected");
+                 $(tab).addClass("selected");
+              },
+              resetAllTutorialSteps: function() {
+                  $(".tutorial-list.active > li").addClass("animate-in");
+              },
+              animateInPresentElements: function(index) {
+                 //获取浏览器可视区高度
+                 var winHeight = $(window).height(),
+                 // 获取页面滚动高度
+                    scTop = $(window).scrollTop(),
+                 // 当前到达的位置
+                    currPos = winHeight + scTop,
+                // 针对this指针偏移
+                    self = this;
+                //遍历每一个动画元素元素
+                 $(".animate-in").each(function(index, element){
+                     if ($(this).offset().top + 80 < currPos) {
+                        $(this).removeClass("animate-in");
+                     }
+                 });
+              }
+          };
+
+          return new Tutorial();
+      })
+   </script>
+</body>
+</html>
